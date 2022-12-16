@@ -20,7 +20,7 @@ The application can be accessed via an internet browser and the results can be s
 
 Link: https://drrobertson9673.github.io/Console_Finances/
 
-![screenshot of the website on large viewport](Images/Screenshot.png)
+![screenshot of the application results](Images/screenshot.png)
 
 ## Credits
 
