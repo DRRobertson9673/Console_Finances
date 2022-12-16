@@ -92,6 +92,7 @@ var finances = [
     var totalEarnings = 0;
     var profitChange = 0;
     var changeArray = [];
+    var changeArrayTotal = 0;
     var highestIncrease = 0;
     var highestIncreaseIndex = 0;
     var highestIncreaseMonth = '';
