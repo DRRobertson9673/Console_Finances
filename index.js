@@ -90,9 +90,14 @@ var finances = [
     // Here I set all the variables I will use throughout the code
     var monthTotal = 0;
     var totalEarnings = 0;
-    var changesArray = 0;
-    var totalChanges = 0;
-    var averageChange = 0;
+    var profitChange = 0;
+    var changeArray = [];
+    var highestIncrease = 0;
+    var highestIncreaseIndex = 0;
+    var highestIncreaseMonth = '';
+    var highestDecrease = 0;
+    var highestDecreaseIndex = 0;
+    var highestDecreaseMonth = '';
     var highestEarnings = 0;
     var highestEarningsMonth = '';
     var lowestEarnings = 0;
@@ -107,27 +112,25 @@ var finances = [
     };
     
     // below here is to calculate the average change in earnings
-    changesArray = finances.map((earnings) => earnings[1]); // this makes an new array of just the second items of the finances array
-    changesArray = changesArray.map(change => Math.abs(change)); // this amends the array of second items so that all negative numbers are now positive
-    
-    for (var i = 0 ; i < changesArray.length ; i++) { // this runs a loop to add the second item of each entry to a running total of changes
-    totalChanges = totalChanges + changesArray[i];
+    for (var i = 1 ; i < finances.length  ; i++) { // this runs a loop with subtracts the previous months profit from the current months profit to see the difference. The result is placed in a new array named changeArray
+     profitChange = finances[i][1] - finances[i-1][1]
+     changeArray.push(profitChange);
     };
     
-    averageChange = (totalChanges / changesArray.length).toFixed(2); // this divides the total of changes by the number of changes and stores in as the variable averageChange to 2 decimal places
+    changeArrayTotal = changeArray.reduce((partialSum, a) => partialSum + a, 0); // this calculates the total of changeArray
     
-    // below here works out the highest and lowest profits and the months they were in
-    for (var i = 0 ; i < finances.length  ; i++) { // this runs a loop where it compares the second item of each entry in the finances array to 'highestEarnings' - if the number is higher it replaces highestEarnings with the new number and also replaces highestEarningMonth with the first item of that entry
-     if (finances[i][1] > highestEarnings) {
-     highestEarnings = finances[i][1];
-     highestEarningsMonth = finances[i][0];
-    }};
+    averageChange = (changeArrayTotal / changeArray.length).toFixed(2); // this calculates the average change amount by dividing the toal by the number of changes. Stores the results to 2 decimal places as averageChange
     
-    for (var i = 0 ; i < finances.length  ; i++) { // this runs a loop where it compares the second item of each entry in the finances array to 'lowestEarnings' - if the number is lower it replaces lowestEarnings with the new number and also replaces lowestEarningMonth with the first item of that entry
-     if (finances[i][1] < lowestEarnings) {
-     lowestEarnings = finances[i][1];
-     lowestEarningsMonth = finances[i][0];
-    }};
+    // below here calculates the highest increase and decrease of profits
+    highestIncrease = Math.max(...changeArray); // searches the changes array for the highest number
+    
+    highestIncreaseIndex = changeArray.indexOf(highestIncrease); // finds the index value of the highest number
+    highestIncreaseMonth = (finances[highestIncreaseIndex + 1][0]) // finds the month responsible for the highest increase in the original array by adding one to the highest increases index
+    
+    highestDecrease = Math.min(...changeArray); // searches the changes array for the lowest number
+    
+    highestDecreaseIndex = changeArray.indexOf(highestDecrease); // finds the index value of the lowest number
+    highestDecreaseMonth = (finances[highestDecreaseIndex + 1][0]) // finds the month responsible for the highest decrease in the original array by adding one to the highest decrease index
     
     // below here prints the results to the console
-    console.log('Financial Analysis' + '\n' + '----------------------------' + '\n' + 'Total Months: ' + finances.length + '\n' + 'Total: $' + totalEarnings + '\n' + 'Average Change: ' + '$' + averageChange + '\n' + 'Greatest Increase in Profits: ' + highestEarningsMonth + ' ' + '($' + highestEarnings + ')' + '\n' + 'Greatest Decrease in Profits: ' + lowestEarningsMonth + ' ' + '($' + lowestEarnings + ')');
+    console.log('Financial Analysis' + '\n' + '----------------------------' + '\n' + 'Total Months: ' + finances.length + '\n' + 'Total: $' + totalEarnings + '\n' + 'Average Change: ' + '$' + averageChange + '\n' + 'Greatest Increase in Profits: ' + highestIncreaseMonth + ' ' + '($' + highestIncrease + ')' + '\n' + 'Greatest Decrease in Profits: ' + highestDecreaseMonth + ' ' + '($' + highestDecrease + ')');
