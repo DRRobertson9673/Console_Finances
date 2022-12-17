@@ -113,7 +113,7 @@ var finances = [
     };
     
     // below here is to calculate the average change in earnings
-    for (var i = 1 ; i < finances.length  ; i++) { // this runs a loop with subtracts the previous months profit from the current months profit to see the difference. The result is placed in a new array named changeArray
+    for (var i = 1 ; i < finances.length  ; i++) { // this runs a loop with subtracts the previous months profit from the current months profit to see the difference. The result is placed in a new array named changeArray. The loop starts on '1' as for the first entry there is no change in profits
      profitChange = finances[i][1] - finances[i-1][1]
      changeArray.push(profitChange);
     };
